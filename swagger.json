@@ -1,0 +1,42 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2",
+    "title": "Tesla-AH",
+    "description": "Create a community of like minded authors to foster inspiration and innovation by leveraging the modern web."
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "auth",
+      "description": " User Authentication "
+    },
+    {
+      "name": "article",
+      "description": " Articles "
+    },
+    {
+      "name": "profile",
+      "description": " User profile "
+    },
+    {
+      "name": "follow",
+      "description": " User should be able to follow and unfollow each other."
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+  },
+  "paths": {
+  }
+}
