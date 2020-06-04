@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import dotenv from 'dotenv';
 
 const config = {};
