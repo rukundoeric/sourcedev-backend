@@ -8,34 +8,42 @@ const { User } = models;
 export const verifyToken = async (req, res, next) => {
   const { token } = req.headers;
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       status: 401,
       error: {
-        message: 'Token is missing'
-      }
+        message: 'Token is missing',
+      },
     });
   }
   try {
     const { userId } = await decodeToken(token);
     try {
       const user = await User.findOne({ where: { userId } });
+      if (!user) {
+        return res.status(400).json({
+          status: 400,
+          error: {
+            message: 'Invalid token',
+          },
+        });
+      }
       req.token = token;
       req.user = user;
       next();
     } catch (error) {
-      res.status(500).json({
+      return res.status(500).json({
         status: 500,
-        error
+        error,
       });
     }
   } catch (error) {
     if (error.name && error.name === 'TokenExpiredError') {
-      res.status(401).json({
+      return res.status(401).json({
         status: 401,
-        message: error.message
+        message: error.message,
       });
     }
-    res.status(500).json({
+    return res.status(500).json({
       status: 500,
       error,
     });

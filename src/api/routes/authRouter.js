@@ -6,6 +6,6 @@ import userMiddleware from '../../middleware/models/userMiddleware';
 const { login } = authController;
 const authRouter = Router();
 
-authRouter.post('/login', userMiddleware[2], userMiddleware[1], login);
+authRouter.post('/login', userMiddleware[1], userMiddleware[2], login);
 
 export default authRouter;

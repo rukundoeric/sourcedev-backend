@@ -4,3 +4,4 @@
 #sequelize migration:create --name add_blocked_column
 # Run migration
 npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all

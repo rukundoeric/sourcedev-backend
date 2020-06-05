@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 module.exports = {
   up: (queryInterface, Sequelize) => Promise.all([
