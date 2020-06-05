@@ -22,21 +22,20 @@ class authController {
     if (isPasswordCorrect) {
       const token = await generateToken({ userId, email });
       await createOrUpdate(userId, token);
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         data: {
           token,
           user
         }
       });
-    } else {
-      res.status(400).json({
-        status: 400,
-        error: {
-          message: 'Incorrect password',
-        }
-      });
     }
+    return res.status(400).json({
+      status: 400,
+      error: {
+        message: 'Incorrect password',
+      }
+    });
   }
 }
 

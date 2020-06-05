@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 app.use('/', api);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.use((req, res) => {
-  res.status(404).json({
+  return res.status(404).json({
     status: 404,
     error: {
       message: 'Page Not found',

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
@@ -5,37 +6,39 @@ module.exports = {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
     userId: {
-      type: Sequelize.UUID
+      type: Sequelize.STRING,
+      unique: true,
     },
     firstName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     lastName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     email: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique: true,
     },
     password: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     role: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     image: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     createdAt: {
       allowNull: false,
-      type: Sequelize.DATE
+      type: Sequelize.DATE,
     },
     updatedAt: {
       allowNull: false,
-      type: Sequelize.DATE
-    }
+      type: Sequelize.DATE,
+    },
   }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users')
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users'),
 };

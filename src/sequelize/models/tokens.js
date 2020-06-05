@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable func-names */
 /* eslint-disable no-unused-vars */
 module.exports = (sequelize, DataTypes) => {

@@ -150,7 +150,191 @@
         }
       }
     },
-
+    "/users": {
+      "get": {
+        "tags": ["admin"],
+        "description": "Get all users",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "Headers",
+            "description": "Client Authentication",
+            "required": false
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "type": "array",
+                  "example": []
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": ["admin"],
+        "description": "Get specific users",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "Headers",
+            "description": "Client Authentication",
+            "required": true
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "$ref": "#/definitions/user"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/block": {
+      "patch": {
+        "tags": ["admin"],
+        "description": "Block user",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "Headers",
+            "description": "Client Authentication",
+            "required": true
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "message": {
+                    "type": "string",
+                    "example": "User blocked successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/unblock": {
+      "patch": {
+        "tags": ["admin"],
+        "description": "Unblock user",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "Headers",
+            "description": "Client Authentication",
+            "required": true
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "message": {
+                    "type": "string",
+                    "example": "User unblocked successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+     "/users/{userId}/delete": {
+      "delete": {
+        "tags": ["admin"],
+        "description": "Delete user",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "Headers",
+            "description": "Client Authentication",
+            "required": true
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "data": {
+                  "message": {
+                    "type": "string",
+                    "example": "User deleted successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/signout": {
       "get": {
         "tags": ["auth"],
