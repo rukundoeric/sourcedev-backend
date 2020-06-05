@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+import 'regenerator-runtime';
 import express from 'express';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
@@ -18,14 +19,12 @@ app.get('/', (req, res) => {
 });
 app.use('/', api);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
-app.use((req, res) => {
-  res.status(404).json({
-    status: 404,
-    error: {
-      message: 'Page Not found',
-    },
-  });
-});
+app.use((req, res) => res.status(404).json({
+  status: 404,
+  error: {
+    message: 'Page Not found',
+  },
+}));
 
 sequelize.sync().then(() => {
   app.listen(port, () => {

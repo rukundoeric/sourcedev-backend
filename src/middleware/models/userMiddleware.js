@@ -1,3 +1,5 @@
+/* eslint-disable no-irregular-whitespace */
+/* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
 /* eslint-disable linebreak-style */
 import models from '../../sequelize/models/index';
@@ -5,14 +7,14 @@ import models from '../../sequelize/models/index';
 const { User } = models;
 
 export default [
-  // Check if User alread exist
+  // Check if User alread exist [0]
   async (req, res, next) => {
     const { email } = req.body;
     const user = await User.findOne({
       where: { email },
     });
     if (user) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 400,
         error: {
           message: 'User already exist',
@@ -21,14 +23,14 @@ export default [
     }
     next();
   },
-  // Check If User is not exist
+  // Check If User is not exist [1]
   async (req, res, next) => {
     const { email } = req.body;
     const user = await User.findOne({
       where: { email },
     });
     if (!user) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 400,
         error: {
           message: 'User not exist',
@@ -38,14 +40,14 @@ export default [
     req.user = user;
     next();
   },
-  // Check if User is blocked
+  // Check if User is blocked [2]
   async (req, res, next) => {
     const { email } = req.body;
     const { blocked } = await User.findOne({
       where: { email },
     });
     if (blocked) {
-      res.status(403).json({
+      return res.status(403).json({
         status: 403,
         error: {
           message:
@@ -53,6 +55,56 @@ export default [
         },
       });
     }
+    next();
+  },
+  // Check if User is admin [3]
+  async (req, res, next) => {
+    const { userId } = req.user;
+    const { role } = await User.findOne({
+      where: { userId },
+    });
+    if (role !== 'admin') {
+      return res.status(403).json({
+        status: 403,
+        error: {
+          message: 'You seem not to be authorized to access this content',
+        },
+      });
+    }
+    next();
+  },
+  // Check if User is admin or owner [4]
+  async (req, res, next) => {
+    const { userId } = req.params;
+    const {
+      dataValues: { userId: myId, role },
+    } = req.user;
+    if (role === 'admin' || myId === userId) {
+      next();
+    } else {
+      return res.status(403).json({
+        status: 403,
+        error: {
+          message: 'You seem not to be authorized to access this content!!!',
+        },
+      });
+    }
+  },
+  // Check if User exist {By UserId} [5]
+  async (req, res, next) => {
+    const { userId } = req.params;
+    const user = await User.findOne({
+      where: { userId },
+    });
+    if (!user) {
+      return res.status(400).json({
+        status: 400,
+        error: {
+          message: 'User not exist',
+        },
+      });
+    }
+    req.user = user;
     next();
   },
 ];

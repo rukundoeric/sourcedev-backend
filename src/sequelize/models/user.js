@@ -1,8 +1,9 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable func-names */
 /* eslint-disable no-unused-vars */
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    userId: DataTypes.UUID,
+    userId: DataTypes.STRING,
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
     email: DataTypes.STRING,
