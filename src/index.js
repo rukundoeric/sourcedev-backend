@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+import 'regenerator-runtime';
 import express from 'express';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
