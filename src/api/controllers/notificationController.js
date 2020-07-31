@@ -1,7 +1,10 @@
 /* eslint-disable linebreak-style */
 import models from '../../sequelize/models';
+import mailObject from '../../helpers/mailer/mailObject';
+import queueMails from '../../workers/queueMails';
+import workers from '../../workers';
 
-const { Notifications } = models;
+const { Notifications, User } = models;
 
 /**
  * @Author - Eric prestein
@@ -11,9 +14,10 @@ class Notification {
    * creating a new notification
    * @param {object} req - Request.
    * @param {object} res - Response.
+   * @param {object} next - Response.
    * @returns {object} - returns created user
    */
-  static async createNotification(req, res) {
+  static async createNotification(req, res, next) {
     const {
       firstName, lastName, email, subject, message
     } = req.body;
@@ -22,14 +26,38 @@ class Notification {
       lastName,
       email,
       subject,
-      message
+      message,
     });
-    return res.status(201).json({
+    req.respondWith = {
       status: 201,
       data: {
         message: 'Notification created',
-        notification: dataValues
-      }
+        notification: dataValues,
+      },
+    };
+    next();
+  }
+
+  /**
+   * creating a new notification
+   * @param {object} req - Request.
+   * @param {object} res - Response.
+   * @returns {object} - returns created user
+   */
+  static async sendMailsNotification(req, res) {
+    const users = await User.findAll({});
+    const { email, message, lastName } = req.body;
+    const { respondWith } = req;
+    const mails = [];
+    mails.push(mailObject('contactUsResponce', email, lastName));
+    users.forEach((user) => {
+      mails.push(mailObject('contactusNotification', user.email, message));
+    });
+    queueMails(mails).then(() => {
+      workers.sendMailsWorker();
+      return res.status(200).send({
+        ...respondWith
+      });
     });
   }
 
@@ -50,7 +78,7 @@ class Notification {
       status: 200,
       data: {
         message: 'Notification Delete Successfully',
-      }
+      },
     });
   }
 
@@ -68,7 +96,7 @@ class Notification {
       status: 200,
       data: {
         message: 'All Notification Delete successfully',
-      }
+      },
     });
   }
 }

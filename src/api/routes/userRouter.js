@@ -6,6 +6,7 @@ import userController from '../controllers/userController';
 import { verifyToken } from '../../middleware/auth';
 
 const {
+  createAdmin,
   createUser,
   getUsers,
   getUser,
@@ -15,6 +16,12 @@ const {
 } = userController;
 
 const userRouter = Router();
+
+userRouter.post(
+  '/create/admin/:key',
+  userMiddleware[6],
+  createAdmin,
+);
 
 userRouter.post(
   '/new',

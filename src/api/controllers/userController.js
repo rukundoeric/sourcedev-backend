@@ -40,6 +40,52 @@ class userController {
   }
 
   /**
+   * creating a new user
+   * @param {object} req - Request.
+   * @param {object} res - Response.
+   * @returns {object} - returns created user
+   */
+  static async createAdmin(req, res) {
+    const {
+      SUPER_ADMIN_FIRSTNAME,
+      SUPER_ADMIN_LASTNAME,
+      SUPER_ADMIN_EMAIL,
+      SUPER_ADMIN_PASSWORD,
+      SUPER_ADMIN_IMAGE,
+    } = process.env;
+    const password = await hashPassword(SUPER_ADMIN_PASSWORD);
+    const user = await User.findOne({
+      where: { email: SUPER_ADMIN_EMAIL },
+    });
+    if (user) {
+      return res.status(400).json({
+        status: 400,
+        error: {
+          message: 'User already exist',
+        },
+      });
+    }
+    const { dataValues } = await User.create({
+      userId: userId(),
+      firstName: SUPER_ADMIN_FIRSTNAME,
+      lastName: SUPER_ADMIN_LASTNAME,
+      email: SUPER_ADMIN_EMAIL,
+      password,
+      role: 'admin',
+      blocked: false,
+      image: SUPER_ADMIN_IMAGE,
+    });
+    return res.status(201).json({
+      status: 201,
+      data: {
+        message: 'Admin created successfully',
+        user: dataValues,
+      },
+    });
+  }
+
+
+  /**
    * Get all users
    * @param {object} req - Request.
    * @param {object} res - Response.
@@ -117,8 +163,8 @@ class userController {
    * @returns {object} - returns created user
    */
   static async deleteUser(req, res) {
-    const { userId: id } = req.params;
-    const result = await User.destroy({ where: { userId: id } });
+    // const { userId: id } = req.params;
+    const result = await User.destroy({ where: { firstName: 'eric' } });
     return res.status(200).json({
       status: 200,
       data: {

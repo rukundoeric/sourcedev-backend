@@ -14,7 +14,9 @@ const password = Joi.string()
   .trim()
   .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/)
   .required()
-  .label('Password is required and must be at least 8 letters containing at least a number a Lowercase letter and an Uppercase letter');
+  .label(
+    'Password is required and must be at least 8 letters containing at least a number a Lowercase letter and an Uppercase letter'
+  );
 const image = Joi.string()
   .trim()
   .required()
@@ -33,18 +35,49 @@ schemas.createUser = Joi.object().keys({
     .required()
     .regex(/^[A-Za-z_-]+$/)
     .min(3)
-    .label('First name is required, it must have at least 3 letters and must contain only letters, underscores(_) and hyphens (-)'),
+    .label(
+      'First name is required, it must have at least 3 letters and must contain only letters, underscores(_) and hyphens (-)'
+    ),
   lastName: Joi.string()
     .trim()
     .required()
     .regex(/^[A-Za-z_.-]+$/)
     .min(3)
-    .label('Last name is required, it must have at least 3 letters and must contain only letters, underscores(_) and hyphens (-)'),
+    .label(
+      'Last name is required, it must have at least 3 letters and must contain only letters, underscores(_) and hyphens (-)'
+    ),
   email,
   role: Joi.string()
     .valid('admin', 'moderator')
     .required()
     .label('Role is required, it must be admin or moderator'),
+});
+schemas.contactUs = Joi.object().keys({
+  firstName: Joi.string()
+    .trim()
+    .required()
+    .label(
+      'First name is required, it must have at least 3 letters and must contain only letters'
+    ),
+  lastName: Joi.string()
+    .trim()
+    .required()
+    .label(
+      'Last name is required, it must have at least 3 letters and must contain only letters'
+    ),
+  email,
+  message: Joi.string()
+    .trim()
+    .required()
+    .label(
+      'Message is required, it must have at least 10 letters and must contain only letters'
+    ),
+  subject: Joi.string()
+    .trim()
+    .required()
+    .label(
+      'subject is required, it must have at least 3 letters and must contain only letters'
+    ),
 });
 
 export default schemas;

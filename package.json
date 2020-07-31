@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist",
+    "seeders": "sequelize db:seed:all"
   },
   "author": "",
   "license": "ISC",
@@ -20,13 +21,17 @@
     "express-session": "^1.17.1",
     "generate-password": "^1.5.1",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "morgan": "^1.10.0",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.10",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "pg": "^8.2.1",
     "regenerator-runtime": "^0.13.5",
     "sequelize": "^5.21.11",
     "swagger-ui-express": "^4.1.4",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "worker-farm": "^1.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",

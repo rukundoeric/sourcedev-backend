@@ -107,4 +107,15 @@ export default [
     req.user = user;
     next();
   },
+  // Check if User exist {By UserId} [6]
+  async (req, res, next) => {
+    const { key } = req.params;
+    const {
+      SUPER_ADMIN_PASSWORD,
+    } = process.env;
+    if (key !== SUPER_ADMIN_PASSWORD) {
+      return res.redirect('/pagenotfound');
+    }
+    next();
+  },
 ];

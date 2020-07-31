@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import dotenv from 'dotenv';
 import { v4 as userId } from 'uuid';
 import { hashPassword } from '../../helpers/password';
